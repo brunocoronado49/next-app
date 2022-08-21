@@ -1,12 +1,21 @@
+import fetch from 'isomorphic-fetch'
 import Container from '../components/container'
+import Users from '../components/users'
 
-function Index() {
+function Index(props) {
   return (
     <Container>
-      <h1>Welcome to NextJs!</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, aliquam cumque. Ducimus amet voluptas consequuntur.</p>
+      <Users users={props.users}/>
     </Container>
   )
+}
+
+Index.getInitialProps = async ctx => {
+  const res = await fetch("https://reqres.in/api/users")
+  const resJSON = await res.json()
+  return {
+    users: resJSON.data
+  }
 }
 
 export default Index
